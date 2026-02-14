@@ -13,12 +13,17 @@
 <body>
     <!-- Floating Background Elements -->
     <div class="floating-elements">
-        <!-- Hearts and bears will be added here by JavaScript -->
+        <!-- Pictures will be added here by JavaScript -->
     </div>
 
     <!-- Main Content Container -->
     <div class="container">
         <h1 id="valentineTitle"></h1>
+        
+        <!-- Kiss Counter Display -->
+        <div class="kiss-counter" id="kissCounter">
+            <p id="kissCounterText" class="hidden">💋 No. of kisses you owe me: <span id="kissCount">0</span></p>
+        </div>
         
         <!-- Music Player -->
         <div id="musicControls" class="music-controls">
@@ -32,8 +37,8 @@
         <!-- First Question -->
         <div class="question-section" id="question1">
             <h2 id="question1Text"></h2>
-            <button class="cute-btn" onclick="moveButton(this)" id="yesBtn1"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn1"></button>
+            <button class="cute-btn" onclick="handleQuestion1Click('yes')" id="yesBtn1"></button>
+            <button class="cute-btn" onclick="handleQuestion1Click('no')" id="noBtn1"></button>
             <!-- CUSTOMIZE: Secret answer text -->
             <div class="secret-answer">
                 <button class="cute-btn special" onclick="showNextQuestion(2)" id="secretAnswerBtn"></button>
@@ -74,4 +79,4 @@
     <script src="theme.js"></script>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
