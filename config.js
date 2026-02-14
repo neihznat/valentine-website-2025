@@ -11,12 +11,16 @@ const CONFIG = {
     // You can use emojis! 💝 💖 💗 💓 💞 💕
     pageTitle: "Will You Be My Valentine? 💝",
 
-    // Floating emojis that appear in the background
-    // Find more emojis at: https://emojipedia.org
-    floatingEmojis: {
-        hearts: ['❤️', '💖', '💝', '💗', '💓'],  // Heart emojis
-        bears: ['🧸', '🐻']                       // Cute bear emojis
-    },
+    // Floating pictures instead of emojis
+    // Upload your images to GitHub in an images/ folder
+    // Use jsDelivr CDN: https://cdn.jsdelivr.net/gh/username/repo@branch/images/filename.jpg
+    // IMPORTANT: Replace these URLs with your actual image URLs
+    floatingPictures: [
+        'https://cdn.jsdelivr.net/gh/neihznat/valentine-website-2025@main/images/photo1.jpg',
+        'https://cdn.jsdelivr.net/gh/neihznat/valentine-website-2025@main/images/photo2.jpg',
+        'https://cdn.jsdelivr.net/gh/neihznat/valentine-website-2025@main/images/photo3.jpg',
+        'https://cdn.jsdelivr.net/gh/neihznat/valentine-website-2025@main/images/photo4.jpg'
+    ],
 
     // Questions and answers
     // Customize each question and its possible responses
@@ -67,8 +71,8 @@ const CONFIG = {
     // Animation settings
     // Adjust these if you want faster/slower animations
     animations: {
-        floatDuration: "15s",           // How long it takes hearts to float up (10-20s recommended)
-        floatDistance: "50px",          // How far hearts move sideways (30-70px recommended)
+        floatDuration: "15s",           // How long it takes pictures to float up (10-20s recommended)
+        floatDistance: "50px",          // How far pictures move sideways (30-70px recommended)
         bounceSpeed: "0.5s",            // Speed of bouncing animations (0.3-0.7s recommended)
         heartExplosionSize: 1.5         // Size of heart explosion effect (1.2-2.0 recommended)
     },
@@ -86,4 +90,4 @@ const CONFIG = {
 };
 
 // Don't modify anything below this line unless you know what you're doing
-window.VALENTINE_CONFIG = CONFIG; 
+window.VALENTINE_CONFIG = CONFIG;
