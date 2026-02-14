@@ -84,24 +84,31 @@ window.addEventListener('DOMContentLoaded', () => {
     setupMusicPlayer();
 });
 
-// Create floating hearts and bears
+// Create floating pictures
 function createFloatingElements() {
     const container = document.querySelector('.floating-elements');
     
-    // Create hearts
-    config.floatingEmojis.hearts.forEach(heart => {
+    // Create multiple instances of the pictures for better coverage
+    const picturesToUse = config.floatingPictures || [];
+    
+    // Duplicate the pictures array to fill the background better
+    const multipliedPictures = [...picturesToUse, ...picturesToUse];
+    
+    multipliedPictures.forEach((picture, index) => {
         const div = document.createElement('div');
-        div.className = 'heart';
-        div.innerHTML = heart;
-        setRandomPosition(div);
-        container.appendChild(div);
-    });
-
-    // Create bears
-    config.floatingEmojis.bears.forEach(bear => {
-        const div = document.createElement('div');
-        div.className = 'bear';
-        div.innerHTML = bear;
+        div.className = 'floating-picture';
+        
+        const img = document.createElement('img');
+        img.src = picture;
+        img.alt = `Floating picture ${index}`;
+        img.onerror = () => {
+            console.warn(`Failed to load image: ${picture}`);
+            // Fallback to emoji if image fails to load
+            div.textContent = '💕';
+            div.classList.add('fallback-emoji');
+        };
+        
+        div.appendChild(img);
         setRandomPosition(div);
         container.appendChild(div);
     });
@@ -127,6 +134,52 @@ function moveButton(button) {
     button.style.position = 'fixed';
     button.style.left = x + 'px';
     button.style.top = y + 'px';
+}
+
+// Kiss Counter Functionality
+function initializeKissCounter() {
+    const kissCount = sessionStorage.getItem('kissCount');
+    if (!kissCount) {
+        sessionStorage.setItem('kissCount', '0');
+    }
+}
+
+function incrementKissCounter() {
+    let kissCount = parseInt(sessionStorage.getItem('kissCount')) || 0;
+    kissCount++;
+    sessionStorage.setItem('kissCount', kissCount);
+    updateKissCounterDisplay();
+}
+
+function updateKissCounterDisplay() {
+    const kissCount = parseInt(sessionStorage.getItem('kissCount')) || 0;
+    
+    if (kissCount > 0) {
+        document.getElementById('kissCounterText').classList.remove('hidden');
+        document.getElementById('kissCount').textContent = kissCount;
+    }
+}
+
+// Handle question 1 button clicks
+function handleQuestion1Click(answer) {
+    // Initialize counter on first click
+    if (!sessionStorage.getItem('kissCounterInitialized')) {
+        sessionStorage.setItem('kissCounterInitialized', 'true');
+        sessionStorage.setItem('kissCount', '1');
+    } else {
+        incrementKissCounter();
+    }
+    
+    updateKissCounterDisplay();
+    
+    // Handle the original button behavior
+    if (answer === 'yes') {
+        // For "Yes" button, proceed to next question
+        showNextQuestion(2);
+    } else {
+        // For "No" button, move it around
+        moveButton(document.getElementById('noBtn1'));
+    }
 }
 
 // Love meter functionality
@@ -169,6 +222,12 @@ loveMeter.addEventListener('input', () => {
     }
 });
 
+// Initialize kiss counter
+window.addEventListener('DOMContentLoaded', () => {
+    initializeKissCounter();
+    updateKissCounterDisplay();
+});
+
 // Initialize love meter
 window.addEventListener('DOMContentLoaded', setInitialPosition);
 window.addEventListener('load', setInitialPosition);
@@ -192,8 +251,7 @@ function celebrate() {
 function createHeartExplosion() {
     for (let i = 0; i < 50; i++) {
         const heart = document.createElement('div');
-        const randomHeart = config.floatingEmojis.hearts[Math.floor(Math.random() * config.floatingEmojis.hearts.length)];
-        heart.innerHTML = randomHeart;
+        heart.innerHTML = '❤️';
         heart.className = 'heart';
         document.querySelector('.floating-elements').appendChild(heart);
         setRandomPosition(heart);
@@ -239,4 +297,4 @@ function setupMusicPlayer() {
             musicToggle.textContent = config.music.startText;
         }
     });
-} 
+}
