@@ -7,8 +7,9 @@
     --button-hover: #ff8787;
     --text-color: #ff4757;
 
-    /* Animations */
+    /* Animations (--float-duration-fast = 1/3 of float-duration for 3x speed) */
     --float-duration: 15s;
+    --float-duration-fast: 5s;
     --float-distance: 50px;
     --bounce-speed: 0.5s;
     --heart-explosion-size: 1.5;
@@ -26,6 +27,8 @@ body {
 }
 
 .container {
+    position: relative;
+    z-index: 10;
     background: rgba(255, 255, 255, 0.9);
     padding: 2rem;
     border-radius: 20px;
@@ -48,6 +51,36 @@ body {
     position: absolute;
     font-size: 2rem;
     animation: float var(--float-duration) linear infinite;
+    animation-fill-mode: backwards;
+}
+
+.floating-picture {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: float var(--float-duration) linear infinite;
+    animation-fill-mode: backwards;
+}
+
+.floating-wrong-answer {
+    position: absolute;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    animation: float var(--float-duration-fast) linear 1 forwards;
+}
+
+/* First-question Yes/No emojis: same 3x speed, removed when going to Q2 */
+.floating-first-q-emoji {
+    position: absolute;
+    font-size: 2rem;
+    animation: float var(--float-duration-fast) linear 1 forwards;
 }
 
 @keyframes float {
@@ -293,6 +326,34 @@ h2 {
     100% { opacity: 0.3; }
 }
 
+.kiss-counter {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.kiss-counter.hidden {
+    display: none;
+}
+
+.kiss-counter-label {
+    font-weight: 600;
+}
+
+#kissCounterValue {
+    font-weight: bold;
+    margin-left: 6px;
+    color: var(--button-color);
+}
+
 .music-controls {
     position: fixed;
     top: 20px;
@@ -315,4 +376,59 @@ h2 {
 .music-btn:hover {
     transform: scale(1.05);
     background: var(--secondary-color);
-} 
+}
+
+/* Q3 reveal layout: text + laughing cat side by side */
+.q3-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.q3-text-area {
+    flex: 1;
+}
+
+/* Drop-in text: hidden by default, animated when revealed */
+.q3-drop {
+    display: none;
+}
+
+.q3-drop.visible {
+    display: inline;
+    animation: dropIn 0.5s ease-out forwards;
+}
+
+@keyframes dropIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-80px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Laughing cat image */
+.q3-cat {
+    width: 120px;
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.q3-cat.visible {
+    display: block;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+}

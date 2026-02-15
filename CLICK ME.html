@@ -16,6 +16,12 @@
         <!-- Hearts and bears will be added here by JavaScript -->
     </div>
 
+    <!-- Kiss counter: visible after first Yes/No on question 1, resets when tab is closed -->
+    <div id="kissCounterDisplay" class="kiss-counter hidden">
+        <span class="kiss-counter-label">Number of kisses you owe me:</span>
+        <span id="kissCounterValue">1</span>
+    </div>
+
     <!-- Main Content Container -->
     <div class="container">
         <h1 id="valentineTitle"></h1>
@@ -32,11 +38,11 @@
         <!-- First Question -->
         <div class="question-section" id="question1">
             <h2 id="question1Text"></h2>
-            <button class="cute-btn" onclick="moveButton(this)" id="yesBtn1"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn1"></button>
+            <button class="cute-btn" onclick="handleFirstQuestionClick(this)" id="yesBtn1"></button>
+            <button class="cute-btn" onclick="handleFirstQuestionClick(this)" id="noBtn1"></button>
             <!-- CUSTOMIZE: Secret answer text -->
             <div class="secret-answer">
-                <button class="cute-btn special" onclick="showNextQuestion(2)" id="secretAnswerBtn"></button>
+                <button class="cute-btn special" onclick="goToSecondQuestion()" id="secretAnswerBtn"></button>
             </div>
         </div>
 
@@ -51,14 +57,21 @@
                     <span id="extraLove" class="hidden"></span>
                 </p>
             </div>
-            <button class="cute-btn" onclick="showNextQuestion(3)" id="nextBtn"></button>
+            <button class="cute-btn" onclick="handleSecondQuestionNext()" id="nextBtn"></button>
         </div>
 
         <!-- Final Question -->
         <div class="question-section hidden" id="question3">
-            <h2 id="question3Text"></h2>
+            <div class="q3-content">
+                <div class="q3-text-area">
+                    <h2 id="question3Text">
+                        <span id="q3TextBefore"></span><span id="q3DropText" class="q3-drop hidden"></span><span id="q3TextAfter"></span>
+                    </h2>
+                </div>
+                <img id="q3LaughingCat" class="q3-cat hidden" src="" alt="laughing cat">
+            </div>
             <button class="cute-btn final-yes" onclick="celebrate()" id="yesBtn3"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn3"></button>
+            <button class="cute-btn" onclick="handleThirdQuestionNoClick(this)" id="noBtn3"></button>
         </div>
 
         <!-- CUSTOMIZE: Celebration message -->
@@ -68,6 +81,11 @@
             <p class="celebration-text" id="celebrationEmojis"></p>
         </div>
     </div>
+
+    <!-- Sound effects (sources set by JavaScript from config) -->
+    <audio id="quackSound" preload="auto"></audio>
+    <audio id="hahaSound" preload="auto"></audio>
+    <audio id="celebrationSound" preload="auto"></audio>
 
     <!-- Scripts -->
     <script src="config.js"></script>
