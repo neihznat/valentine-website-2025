@@ -109,7 +109,7 @@ const CONFIG = {
     soundEffects: {
         quackUrl: "audio/quack.mp3",               // Plays when a wrong option is clicked
         hahaUrl: "audio/haha.mp3",                 // Plays when Q3 "and 15th" is revealed
-        celebrationUrl: "audio/i_love_you.m4a",   // Plays when the final celebration screen appears
+        celebrationUrl: "audio/celebration.mp3",   // Plays when the final celebration screen appears
         laughingCatImage: "images/laughing-cat.png" // Laughing cat shown during Q3 reveal
     }
 };
